@@ -1,5 +1,6 @@
 parameters:
     level: 4
+    treatPhpDocTypesAsCertain: false
     paths:
         - ./
     excludePaths:
@@ -8,11 +9,8 @@ parameters:
     ignoreErrors:
         # Method will exit if $method isn't defined (via a $found boolean in a loop)
         - '#Variable \$method might not be defined\.#'
-        # I think most of these null checks are unnecessary, but the return types may need null added if the property is never initialized
-        - '#Strict comparison using === between null and Zend_Json_Server_Request will always evaluate to false\.#'
-        - '#Strict comparison using === between null and Zend_Json_Server_Response will always evaluate to false\.#'
-        - '#Strict comparison using === between null and string will always evaluate to false\.#'
-        # Defensive coding where these can't be enforced by php type-hints
         -
-            message: '#Result of && is always false\.#'
-            path: %currentWorkingDirectory%/src/Zend/Json/Server.php
+            message: '#^Parameter &\$value by\-ref type of method Zend_Json\:\:_recursiveJsonExprFinder\(\) expects iterable\|Zend_Json_Expr, string given\.$#'
+            identifier: parameterByRef.type
+            count: 1
+            path: src/Zend/Json.php
